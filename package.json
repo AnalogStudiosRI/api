@@ -1,7 +1,7 @@
 {
   "name": "api.analogstudios.net",
   "version": "0.1.0",
-  "repository": "git@github.com:AnalogStudiosRI/api.analogstudios.net.git",
+  "repository": "git@github.com:AnalogStudiosRI/api.git",
   "author": "Owen Buckley <analogstudiosri@gmail.com>",
   "license": "MIT",
   "scripts": {
