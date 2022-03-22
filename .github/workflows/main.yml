@@ -1,6 +1,9 @@
-name: Continuous Integration
+name: Main Integration
 
-on: [pull_request]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
 
@@ -31,4 +34,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        yarn arc deploy --staging
+        yarn arc deploy --production
