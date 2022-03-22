@@ -6,12 +6,14 @@
   "license": "MIT",
   "scripts": {
     "arc": "arc",
+    "lint": "eslint \"*.js\" \"./src/**/**/*.js\"",
     "start": "arc sandbox"
   },
   "dependencies": {
     "contentful": "^9.1.18"
   },
   "devDependencies": {
-    "@architect/architect": "^10.1.0"
+    "@architect/architect": "^10.1.0",
+    "eslint": "^8.11.0"
   }
 }

@@ -23,12 +23,6 @@ jobs:
     - name: Installing project dependencies
       run: |
         yarn install --frozen-lockfile
-    # - name: Lint
-    #   run: |
-    #     yarn lint
-    # - name: Test
-    #   run: |
-    #     yarn test
     - name: Deploy Staging
       env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}

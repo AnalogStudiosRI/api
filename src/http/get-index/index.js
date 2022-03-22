@@ -1,5 +1,5 @@
 // learn more about HTTP functions here: https://arc.codes/http
-exports.handler = async function http (req) {
+exports.handler = async function http () {
   return {
     statusCode: 200,
     headers: {
@@ -14,7 +14,10 @@ exports.handler = async function http (req) {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Architect</title>
   <style>
-     * { margin: 0; padding: 0; box-sizing: border-box; } body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } .max-width-320 { max-width: 20rem; } .margin-left-8 { margin-left: 0.5rem; } .margin-bottom-16 { margin-bottom: 1rem; } .margin-bottom-8 { margin-bottom: 0.5rem; } .padding-32 { padding: 2rem; } .color-grey { color: #333; } .color-black-link:hover { color: black; } 
+    * { margin: 0; padding: 0; box-sizing: border-box; } 
+    body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; } .max-width-320 { max-width: 20rem; } 
+    .margin-left-8 { margin-left: 0.5rem; } .margin-bottom-16 { margin-bottom: 1rem; } .margin-bottom-8 { margin-bottom: 0.5rem; } 
+    .padding-32 { padding: 2rem; } .color-grey { color: #333; } .color-black-link:hover { color: black; } 
   </style>
 </head>
 <body class="padding-32">
@@ -45,5 +48,5 @@ exports.handler = async function http (req) {
 </body>
 </html>
 `
-  }
-}
+  };
+};
