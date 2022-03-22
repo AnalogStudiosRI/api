@@ -1,24 +1,27 @@
 // https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/
 const contentful = require('contentful');
+const documentToHtmlString = require('@contentful/rich-text-html-renderer').documentToHtmlString;
+
 const client = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE,
   accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
 });
 
-// events schema
-// {
-//   "id":"14",
-//   "title":"9th Annual WhaleFest",
-//   "description":"..... &nbsp;Hope to see everyone there to support a great cause! &nbsp;<\/p>\n\n<p>Special thanks to Steve and MaryAnne for putting this event on for everyone!<\/p>\n",
-//   "startTime":"1484434800",
-//   "endTime":"1484434800",
-//   "createdTime":"1484180774"
-// }
-
 // learn more about HTTP functions here: https://arc.codes/http
 exports.handler = async function http () {
-  const events = await client.getEntries('Event');
+  const events = (await client.getEntries('Event'))
+    .items.map((event) => {
+      const { description, endTime, startTime, title } = event.fields;
 
+      return {
+        id: null,
+        title,
+        description: documentToHtmlString(description),
+        startTime: new Date(startTime).getTime() / 1000,
+        endTime: new Date(endTime).getTime() / 1000
+      };
+    });
+  
   return {
     statusCode: 200,
     headers: {
@@ -26,6 +29,6 @@ exports.handler = async function http () {
       'content-type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     },
-    body: JSON.stringify(events.items)
+    body: JSON.stringify(events)
   };
 };
