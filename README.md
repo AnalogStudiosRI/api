@@ -1,8 +1,9 @@
 # api.analogstudios.net
 
+## Overview
 Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) using [arc.codes](https://arc.codes/).
 
-Support APIs
+### Supported APIs
 * `events` - Structured events content sourced from [**Contentful**](https://contentful.com/)
 
 ## Setup
