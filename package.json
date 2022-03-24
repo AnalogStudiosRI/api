@@ -10,6 +10,7 @@
     "start": "arc sandbox"
   },
   "dependencies": {
+    "@contentful/rich-text-html-renderer": "^15.11.1",
     "contentful": "^9.1.18"
   },
   "devDependencies": {
