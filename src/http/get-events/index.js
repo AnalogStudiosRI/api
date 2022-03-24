@@ -11,10 +11,10 @@ const client = contentful.createClient({
 exports.handler = async function http () {
   const events = (await client.getEntries('Event'))
     .items.map((event) => {
-      const { description, endTime, startTime, title } = event.fields;
+      const { id, description, endTime, startTime, title } = event.fields;
 
       return {
-        id: null,
+        id,
         title,
         description: documentToHtmlString(description),
         startTime: new Date(startTime).getTime() / 1000,
