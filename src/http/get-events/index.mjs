@@ -1,6 +1,6 @@
 // https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/
-const contentful = require('contentful');
-const documentToHtmlString = require('@contentful/rich-text-html-renderer').documentToHtmlString;
+import contentful from 'contentful';
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 const client = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE,
@@ -8,7 +8,7 @@ const client = contentful.createClient({
 });
 
 // learn more about HTTP functions here: https://arc.codes/http
-exports.handler = async function http (req) {
+export async function handler (req) {
   const { queryStringParameters } = req;
 
   let events = (await client.getEntries('Event'))
@@ -37,4 +37,4 @@ exports.handler = async function http (req) {
     },
     body: JSON.stringify(events)
   };
-};
+}
