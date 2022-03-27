@@ -1,5 +1,5 @@
 // learn more about HTTP functions here: https://arc.codes/http
-exports.handler = async function http () {
+export async function handler () {
   return {
     statusCode: 200,
     headers: {
@@ -49,4 +49,4 @@ exports.handler = async function http () {
 </html>
 `
   };
-};
+}
