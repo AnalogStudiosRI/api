@@ -4,6 +4,9 @@
   "repository": "git@github.com:AnalogStudiosRI/api.git",
   "author": "Owen Buckley <analogstudiosri@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=14.17.0"
+  },
   "scripts": {
     "arc": "arc",
     "lint": "eslint \"*.js\" \"./src/**/**/*.js\"",
