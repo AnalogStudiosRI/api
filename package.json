@@ -9,7 +9,7 @@
   },
   "scripts": {
     "arc": "arc",
-    "lint": "eslint \"*.js\" \"./src/**/**/*.js\"",
+    "lint": "eslint \"*.*js\" \"./src/**/**/*.*js\"",
     "start": "arc sandbox"
   },
   "dependencies": {
