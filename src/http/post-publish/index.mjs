@@ -25,6 +25,7 @@ const CONFIG = {
 export async function handler(req) {
   console.debug({ req });
   const cfClient = new AWS.CloudFront(CONFIG);
+  const entity = req.sys.contentType.sys.id;
 
   // invalidate index.html in Cloudfront
   const params = {
@@ -34,14 +35,14 @@ export async function handler(req) {
       Paths: {
         Quantity: 1,
         Items: [
-          '/api/v2/events'
+          `/api/v2/${entity}`
         ]
       }
     }
   };
 
   try {
-    cfClient.createInvalidation(params);
+    await cfClient.createInvalidation(params);
 
     return {
       statusCode: 200,
@@ -60,3 +61,85 @@ export async function handler(req) {
     };
   }
 }
+
+// {
+//   "metadata": {
+//     "tags": []
+//   },
+//   "sys": {
+//     "type": "Entry",
+//     "id": "4mB0XJJDS7UWlDRulVKutx",
+//     "space": {
+//       "sys": {
+//         "type": "Link",
+//         "linkType": "Space",
+//         "id": "kpfxkjvd7pox"
+//       }
+//     },
+//     "environment": {
+//       "sys": {
+//         "id": "master",
+//         "type": "Link",
+//         "linkType": "Environment"
+//       }
+//     },
+//     "contentType": {
+//       "sys": {
+//         "type": "Link",
+//         "linkType": "ContentType",
+//         "id": "event"
+//       }
+//     },
+//     "createdBy": {
+//       "sys": {
+//         "type": "Link",
+//         "linkType": "User",
+//         "id": "2zyeBc0W6qvMF8RBEon82b"
+//       }
+//     },
+//     "updatedBy": {
+//       "sys": {
+//         "type": "Link",
+//         "linkType": "User",
+//         "id": "2zyeBc0W6qvMF8RBEon82b"
+//       }
+//     },
+//     "revision": 1,
+//     "createdAt": "2022-03-29T01:21:21.307Z",
+//     "updatedAt": "2022-03-29T01:21:21.307Z"
+//   },
+//   "fields": {
+//     "id": {
+//       "en-US": 0
+//     },
+//     "title": {
+//       "en-US": "Publish test"
+//     },
+//     "description": {
+//       "en-US": {
+//         "data": {},
+//         "content": [
+//           {
+//             "data": {},
+//             "content": [
+//               {
+//                 "data": {},
+//                 "marks": [],
+//                 "value": "dsfdsf",
+//                 "nodeType": "text"
+//               }
+//             ],
+//             "nodeType": "paragraph"
+//           }
+//         ],
+//         "nodeType": "document"
+//       }
+//     },
+//     "startTime": {
+//       "en-US": "2022-03-30T00:00"
+//     },
+//     "endTime": {
+//       "en-US": "2022-03-30T00:00"
+//     }
+//   }
+// }
