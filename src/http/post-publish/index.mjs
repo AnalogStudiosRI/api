@@ -7,6 +7,7 @@ const CONFIG = {
 };
 
 export async function handler(req) {
+  console.debug({ req });
   const cfClient = new AWS.CloudFront(CONFIG);
   const entity = req.sys.contentType.sys.id;
 
@@ -24,25 +25,25 @@ export async function handler(req) {
     }
   };
 
-  return new Promise.resolve((resolve, reject) => {
-    cfClient.createInvalidation(params).then((err) => {
-      if(err) {
-        reject({
-          statusCode: 500,
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify({ msg: e })
-        })
-      } else {
-        resolve({
-          statusCode: 200,
-          headers: {
-            'content-type': 'application/json'
-          },
-          body: JSON.stringify({ msg: 'success' })
-        })
-      }
-    });
-  })
+  try {
+    await cfClient.createInvalidation(params);
+
+    return {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ msg: 'success' })
+    };
+  } catch (e) {
+    return {
+      statusCode: 500,
+      headers: {
+        'content-type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({ msg: e })
+    };
+  }
 }
