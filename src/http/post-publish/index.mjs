@@ -35,7 +35,7 @@ export async function handler(req) {
       Paths: {
         Quantity: 1,
         Items: [
-          `/api/v2/${entity}`
+          `/api/v2/${entity}s`
         ]
       }
     }
