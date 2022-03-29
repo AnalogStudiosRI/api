@@ -40,11 +40,23 @@ export async function handler(req) {
     }
   };
 
-  cfClient.createInvalidation(params, function(err, data) {
-    if (err) {
-      console.log(err, err.stack);
-    } else {
-      console.log(data);
-    }
-  });
+  try {
+    cfClient.createInvalidation(params);
+
+    return {
+      statusCode: 200,
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ msg: 'success' })
+    };
+  } catch (e) {
+    return {
+      statusCode: 500,
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify({ msg: e })
+    };
+  }
 }
