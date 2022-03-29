@@ -4,6 +4,7 @@ api
 @http
 get /
 get /events
+post /publish
 
 @aws
 # profile default
