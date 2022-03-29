@@ -7,9 +7,9 @@ const CONFIG = {
 };
 
 export async function handler(req) {
-  console.debug({ req });
   const cfClient = new AWS.CloudFront(CONFIG);
-  const entity = req.sys.contentType.sys.id;
+  const body = req.body ? JSON.parse(req.body) : req; // https://stackoverflow.com/a/55354185/417806
+  const entity = body.sys.contentType.sys.id;
 
   // invalidate index.html in Cloudfront
   const params = {
@@ -31,8 +31,7 @@ export async function handler(req) {
     return {
       statusCode: 200,
       headers: {
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'content-type': 'application/json'
       },
       body: JSON.stringify({ msg: 'success' })
     };
@@ -40,8 +39,7 @@ export async function handler(req) {
     return {
       statusCode: 500,
       headers: {
-        'content-type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
+        'content-type': 'application/json'
       },
       body: JSON.stringify({ msg: e })
     };
