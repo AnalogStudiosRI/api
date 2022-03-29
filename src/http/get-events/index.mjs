@@ -31,7 +31,7 @@ export async function handler (req) {
   return {
     statusCode: 200,
     headers: {
-      'cache-control': 'no-cache, no-store, must-revalidate, max-age=0, s-maxage=0',
+      'cache-control': 'max-age=604800',
       'content-type': 'application/json',
       'Access-Control-Allow-Origin': '*'
     },
