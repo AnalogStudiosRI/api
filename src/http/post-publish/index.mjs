@@ -3,7 +3,8 @@ import * as AWS from '@aws-sdk/client-cloudfront';
 const CONFIG = {
   region: 'us-east-1',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  distributionId: process.env.AWS_CLOUDFRONT_ID
 };
 
 export async function handler(req) {
@@ -13,7 +14,7 @@ export async function handler(req) {
 
   // invalidate index.html in Cloudfront
   const params = {
-    DistributionId: 'E3MKRY7663NB8F',
+    DistributionId: CONFIG.distributionId,
     InvalidationBatch: {
       CallerReference: new Date().getTime(),
       Paths: {
