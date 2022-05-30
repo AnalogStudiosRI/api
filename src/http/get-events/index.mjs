@@ -1,5 +1,7 @@
 // match runtime TZ to publish TZ
-process.env.TZ = "America/New_York";
+// https://github.com/AnalogStudiosRI/www.analogstudios.net/issues/75
+// https://github.com/AnalogStudiosRI/api/pull/10
+process.env.TZ = 'America/New_York';
 
 // https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/
 import contentful from 'contentful';
