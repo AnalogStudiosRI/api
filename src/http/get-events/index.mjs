@@ -1,3 +1,8 @@
+// match runtime TZ to publish TZ
+// https://github.com/AnalogStudiosRI/www.analogstudios.net/issues/75
+// https://github.com/AnalogStudiosRI/api/pull/10
+process.env.TZ = 'America/New_York';
+
 // https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/
 import contentful from 'contentful';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
@@ -23,7 +28,7 @@ export async function handler (req) {
         endTime: new Date(endTime).getTime() / 1000
       };
     });
-  
+
   if (queryStringParameters && queryStringParameters.id) {
     events = events.filter(event => parseInt(event.id, 10) === parseInt(queryStringParameters.id, 10));
   }
