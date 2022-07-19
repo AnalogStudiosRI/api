@@ -23,7 +23,13 @@ export async function handler (req) {
       return {
         id,
         title,
-        description: documentToHtmlString(description),
+        description: documentToHtmlString(description, {
+          // https://github.com/contentful/rich-text/issues/61
+          renderNode: {
+            'embedded-asset-block': (node) =>
+              `<img src="${node.data.target.fields.file.url}" loading="lazy"/>`
+          }
+        }),
         startTime: new Date(startTime).getTime() / 1000,
         endTime: new Date(endTime).getTime() / 1000
       };
