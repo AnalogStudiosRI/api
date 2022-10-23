@@ -14,8 +14,8 @@ const client = contentful.createClient({
 
 // learn more about HTTP functions here: https://arc.codes/http
 export async function handler (req) {
-  const { queryStringParameters = {} } = req;
-  const { id, tag } = queryStringParameters;
+  const params = req.queryStringParameters || {};
+  const { id, tag } = params;
 
   let events = (await client.getEntries('Event'))
     .items.map((event) => {
@@ -40,7 +40,7 @@ export async function handler (req) {
       };
     });
 
-  if (queryStringParameters) {
+  if (params) {
     if (id) {
       events = events.filter(event => parseInt(event.id, 10) === parseInt(queryStringParameters.id, 10));
     } else if (tag) {
