@@ -19,6 +19,7 @@ export async function handler (req) {
   let events = (await client.getEntries('Event'))
     .items.map((event) => {
       const { id, description, endTime, startTime, title } = event.fields;
+      const { tags = [] } = event.metadata;
 
       return {
         id,
@@ -31,7 +32,10 @@ export async function handler (req) {
           }
         }),
         startTime: new Date(startTime).getTime() / 1000,
-        endTime: new Date(endTime).getTime() / 1000
+        endTime: new Date(endTime).getTime() / 1000,
+        tags: tags.map((tag) => {
+          return tag.sys.id
+        })
       };
     });
 
