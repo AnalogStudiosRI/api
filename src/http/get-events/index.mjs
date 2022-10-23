@@ -14,11 +14,13 @@ const client = contentful.createClient({
 
 // learn more about HTTP functions here: https://arc.codes/http
 export async function handler (req) {
-  const { queryStringParameters } = req;
+  const { queryStringParameters = {} } = req;
+  const { id, tag } = queryStringParameters;
 
   let events = (await client.getEntries('Event'))
     .items.map((event) => {
       const { id, description, endTime, startTime, title } = event.fields;
+      const { tags = [] } = event.metadata;
 
       return {
         id,
@@ -31,12 +33,19 @@ export async function handler (req) {
           }
         }),
         startTime: new Date(startTime).getTime() / 1000,
-        endTime: new Date(endTime).getTime() / 1000
+        endTime: new Date(endTime).getTime() / 1000,
+        tags: tags.map((tag) => {
+          return tag.sys.id;
+        })
       };
     });
 
-  if (queryStringParameters && queryStringParameters.id) {
-    events = events.filter(event => parseInt(event.id, 10) === parseInt(queryStringParameters.id, 10));
+  if (queryStringParameters) {
+    if (id) {
+      events = events.filter(event => parseInt(event.id, 10) === parseInt(queryStringParameters.id, 10));
+    } else if (tag) {
+      events = events.filter(event => event.tags.includes(tag));
+    }
   }
 
   return {

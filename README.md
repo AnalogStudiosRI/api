@@ -3,8 +3,15 @@
 ## Overview
 Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) using [arc.codes](https://arc.codes/).
 
-### Supported APIs
-* `events` - Structured events content sourced from [**Contentful**](https://contentful.com/)
+## Supported APIs
+### `events`
+Structured events content sourced from [**Contentful**](https://contentful.com/) around the **Event** content type.
+
+_Options:_
+- `?id=n` - Filter by the ID of the event
+- `?tag=xxx` - Filter by tags of the event
+
+> _You can only pass one or the other_
 
 ## Setup
 
