@@ -42,7 +42,7 @@ export async function handler (req) {
 
   if (params) {
     if (id) {
-      events = events.filter(event => parseInt(event.id, 10) === parseInt(queryStringParameters.id, 10));
+      events = [events.find(event => parseInt(event.id, 10) === parseInt(id, 10))];
     } else if (tag) {
       events = events.filter(event => event.tags.includes(tag));
     }
