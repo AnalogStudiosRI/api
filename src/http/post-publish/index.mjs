@@ -20,7 +20,7 @@ export async function handler(req) {
       Paths: {
         Quantity: 1,
         Items: [
-          `/api/v2/${entity}s/*`
+          `/api/v2/${entity}s*`
         ]
       }
     }
