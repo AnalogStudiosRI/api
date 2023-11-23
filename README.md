@@ -1,7 +1,7 @@
-# api.analogstudios.net
+# API
 
 ## Overview
-Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) using [arc.codes](https://arc.codes/).
+Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) (and friends) using [arc.codes](https://arc.codes/).
 
 ## Supported APIs
 ### `events`
