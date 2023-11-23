@@ -18,9 +18,9 @@ _Options:_
 Assumes valid [AWS credentials](https://arc.codes/docs/en/get-started/detailed-aws-setup) are either exported as environment variables or you have a relevant configuration setup in _~/aws/credentials_.
 
 1. Clone the repo
-1. Run `yarn install`
-1. Run `yarn arc env`
+1. Run `npm run ci`
+1. Run `npm run arc env`
 
 ## Local Development
 
-To setup the local sandbox, run `yarn start`.
+To setup the local sandbox, run `npm start`.
