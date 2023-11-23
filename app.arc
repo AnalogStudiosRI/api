@@ -4,6 +4,7 @@ api
 @http
 get /
 get /events
+get /posts
 post /publish
 
 @aws
