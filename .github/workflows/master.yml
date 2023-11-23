@@ -22,7 +22,7 @@ jobs:
         node-version: ${{ matrix.node }}
     - name: Installing project dependencies
       run: |
-        npm run ci
+        npm ci
     - name: Deploy Production
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
