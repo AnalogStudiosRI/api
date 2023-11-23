@@ -5,7 +5,7 @@
   "author": "Owen Buckley <analogstudiosri@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=14.17.0"
+    "node": ">=18.12.1"
   },
   "scripts": {
     "arc": "arc",
