@@ -13,6 +13,11 @@ _Options:_
 
 > _You can only pass one or the other_
 
+### Artists
+Structured events content sourced from [**Contentful**](https://planetscale.com) around the **Album** resource type.  Available at `/artists` internally and publicly as `/api/v2/artists`.
+
+_Options:_
+- `?id=xxx` - Filter by the `id` of the artist
 
 ### Events
 Structured events content sourced from [**Contentful**](https://contentful.com/) around the **Event** resource type.  Available at `/events` internally and publicly as `/api/v2/events`.

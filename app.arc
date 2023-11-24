@@ -4,6 +4,7 @@ api
 @http
 get /
 get /albums
+get /artists
 get /events
 get /posts
 post /publish
