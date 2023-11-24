@@ -5,13 +5,19 @@ Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/w
 
 ## Supported APIs
 ### `events`
-Structured events content sourced from [**Contentful**](https://contentful.com/) around the **Event** content type.
+Structured events content sourced from [**Contentful**](https://contentful.com/) around the **Event** resource type.  Available at `/events` internally and publicly as `/api/v2/events`.
 
 _Options:_
 - `?id=n` - Filter by the ID of the event
 - `?tag=xxx` - Filter by tags of the event
 
 > _You can only pass one or the other_
+
+### `posts`
+Structured events content sourced from the [**PlanetScale**](https://contentful.com/) database around the **Posts** resource type.  Available at `/posts` internally and publicly as `/api/v2/posts`.
+
+_Options:_
+- `?id=n` - Filter by the ID of the post
 
 ## Setup
 
