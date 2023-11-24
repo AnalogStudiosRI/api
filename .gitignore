@@ -1,3 +1,5 @@
 node_modules/
 preferences.arc
 .env
+.greenwood/
+public/
