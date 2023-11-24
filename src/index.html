@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Dashboard</title>
+  
+    <script>
+      function fetchResource(resourceType) {
+        fetch(`/api/${resourceType}`)
+          .then(async(response) => {
+            console.log(`RESPONSE for type => ${resourceType}`, await response.json());
+          })
+      }
+
+      window.addEventListener('DOMContentLoaded', function() {
+        console.log('here')
+        document.getElementById('posts').addEventListener('click', () => fetchResource('posts'));
+      });
+    </script>
+  </head>
+
+  <body>
+    <h1>Resource Logger</h1>
+    <button id="posts">Log Posts</button>
+  </body>
+  
+</html>
