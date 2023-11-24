@@ -4,20 +4,30 @@
 Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) (and friends) using [arc.codes](https://arc.codes/).
 
 ## Supported APIs
-### `events`
+### Albums
+Structured events content sourced from [**Contentful**](https://planetscale.com) around the **Album** resource type.  Available at `/albums` internally and publicly as `/api/v2/albums`.
+
+_Options:_
+- `?id=xxx` - Filter by the `id` of the album
+- `?artistId=xxx` - Filter by the `id` of an artist
+
+> _You can only pass one or the other_
+
+
+### Events
 Structured events content sourced from [**Contentful**](https://contentful.com/) around the **Event** resource type.  Available at `/events` internally and publicly as `/api/v2/events`.
 
 _Options:_
-- `?id=n` - Filter by the ID of the event
+- `?id=xxx` - Filter by the `id` of the event
 - `?tag=xxx` - Filter by tags of the event
 
 > _You can only pass one or the other_
 
-### `posts`
-Structured events content sourced from the [**PlanetScale**](https://contentful.com/) database around the **Posts** resource type.  Available at `/posts` internally and publicly as `/api/v2/posts`.
+### Posts
+Structured events content sourced from the [**PlanetScale**](https://planetscale.com) database around the **Post** resource type.  Available at `/posts` internally and publicly as `/api/v2/posts`.
 
 _Options:_
-- `?id=n` - Filter by the ID of the post
+- `?id=xxx` - Filter by the `id` of a post
 
 ## Setup
 
