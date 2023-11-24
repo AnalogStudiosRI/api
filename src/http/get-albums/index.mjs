@@ -2,11 +2,13 @@ import mysql from 'mysql2/promise';
 
 export async function handler (req) {
   const params = req.queryStringParameters || {};
-  const { id } = params;
+  const { id, artistId } = params;
   const connection = await mysql.createConnection(process.env.DATABASE_URL);
   const [rows] = id
     ? await connection.execute('SELECT * FROM albums WHERE id = ?', [id])
-    : await connection.execute('SELECT * FROM albums');
+    : artistId
+      ? await connection.execute('SELECT * FROM albums WHERE artistId = ?', [artistId])
+      : await connection.execute('SELECT * FROM albums');
 
   return {
     statusCode: 200,
