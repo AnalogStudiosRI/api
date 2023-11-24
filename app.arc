@@ -3,6 +3,7 @@ api
 
 @http
 get /
+get /albums
 get /events
 get /posts
 post /publish
