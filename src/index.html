@@ -9,7 +9,10 @@
       function fetchResource(resourceType) {
         fetch(`/api/${resourceType}`)
           .then(async(response) => {
-            console.log(`RESPONSE for type => ${resourceType}`, await response.json());
+            const data = await response.json();
+            console.log(`RESPONSE for type => ${resourceType}`, { data });
+            document.getElementById('results').textContent = data.length;
+            document.getElementsByTagName('pre')[0].textContent = JSON.stringify(data);
           })
       }
 
@@ -17,6 +20,7 @@
         document.getElementById('posts').addEventListener('click', () => fetchResource('posts'));
         document.getElementById('artists').addEventListener('click', () => fetchResource('artists'));
         document.getElementById('albums').addEventListener('click', () => fetchResource('albums'));
+        document.getElementById('events').addEventListener('click', () => fetchResource('events'));
       });
     </script>
 
@@ -29,14 +33,28 @@
         height: 50px;
         border-radius: 5px;
       }
+      details {
+        margin: 20px auto;
+      }
+      pre {
+        margin: 0 auto;
+        display: block;
+        width: 80%;
+        white-space: pre-wrap;
+      }
     </style>
   </head>
 
   <body>
     <h1>Resource Logger</h1>
-    <button id="posts">Posts</button>
-    <button id="artists">Artists</button>
+    <h2>Number of results: <span id="results"></span></h2>
     <button id="albums">Albums</button>
+    <button id="artists">Artists</button>
+    <button id="events">Events</button>
+    <button id="posts">Posts</button>
+    <details>
+      <pre></pre>
+    </details>
   </body>
   
 </html>
