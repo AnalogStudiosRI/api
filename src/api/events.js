@@ -14,7 +14,6 @@ const client = contentful.createClient({
 
 // learn more about HTTP functions here: https://arc.codes/http
 export async function handler (request) {
-  // console.log('ENV @@@@@', process.env);
   const params = new URLSearchParams(request.url.slice(request.url.indexOf('?')));
   const id = params.has('id') ? params.get('id') : null;
   const tag = params.has('tag') ? params.get('tag') : null;
