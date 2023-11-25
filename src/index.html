@@ -2,6 +2,8 @@
 <html>
   <head>
     <title>API Dashboard</title>
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <link rel="icon" href="/favicon.ico"/>
   
     <script>
       function fetchResource(resourceType) {
@@ -12,15 +14,29 @@
       }
 
       window.addEventListener('DOMContentLoaded', function() {
-        console.log('here')
         document.getElementById('posts').addEventListener('click', () => fetchResource('posts'));
+        document.getElementById('artists').addEventListener('click', () => fetchResource('artists'));
+        document.getElementById('albums').addEventListener('click', () => fetchResource('albums'));
       });
     </script>
+
+    <style>
+      body {
+        text-align: center;
+      }
+      button {
+        width: 10%;
+        height: 50px;
+        border-radius: 5px;
+      }
+    </style>
   </head>
 
   <body>
     <h1>Resource Logger</h1>
-    <button id="posts">Log Posts</button>
+    <button id="posts">Posts</button>
+    <button id="artists">Artists</button>
+    <button id="albums">Albums</button>
   </body>
   
 </html>

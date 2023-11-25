@@ -5,8 +5,8 @@ export async function handler (request) {
   const id = params.has('id') ? params.get('id') : null;
   const connection = await mysql.createConnection(process.env.DATABASE_URL);
   const [rows] = id
-    ? await connection.execute('SELECT * FROM posts WHERE id = ?', [id])
-    : await connection.execute('SELECT * FROM posts');
+    ? await connection.execute('SELECT * FROM artists WHERE id = ?', [id])
+    : await connection.execute('SELECT * FROM artists');
 
   return new Response(JSON.stringify(rows), {
     headers: new Headers({
