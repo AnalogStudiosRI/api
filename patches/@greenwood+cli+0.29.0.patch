@@ -1,0 +1,22 @@
+diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
+index 5ce30c1..2a9f7d0 100644
+--- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
++++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
+@@ -167,9 +167,15 @@ async function walkPackageJson(packageJson = {}) {
+               ? esmPath
+               : fallbackPath;
+           } else if (exportMapEntry.import || exportMapEntry.default) {
++            console.log({ dependencyPackageRootPath, exportMapEntry });
+             packageExport = exportMapEntry.import
+-              ? exportMapEntry.import
+-              : exportMapEntry.default;
++              ? exportMapEntry.import.default
++              : exportMapEntry.import.default
++                ? exportMapEntry.import
++                : exportMapEntry.default;
++
++            console.log({ packageExport });
++            console.log('=====================')
+ 
+             // use the dependency itself as an entry in the importMap
+             if (entry === '.') {
