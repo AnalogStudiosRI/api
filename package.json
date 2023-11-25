@@ -14,7 +14,8 @@
     "dev": "greenwood develop",
     "build": "greenwood build",
     "serve": "npm run clean && npm run build && greenwood serve",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^15.11.1",
@@ -25,6 +26,7 @@
     "@aws-sdk/client-cloudfront": "^3.58.0",
     "@greenwood/cli": "^0.29.0",
     "eslint": "^8.11.0",
+    "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5"
   }
