@@ -13,13 +13,13 @@
     "start": "arc sandbox"
   },
   "dependencies": {
-    "@aws-sdk/client-cloudfront": "^3.58.0",
     "@contentful/rich-text-html-renderer": "^15.11.1",
     "contentful": "^9.1.18",
     "mysql2": "^3.6.5"
   },
   "devDependencies": {
-    "@architect/architect": "^10.1.0",
+    "@architect/architect": "^10.11.2",
+    "@aws-sdk/client-cloudfront": "^3.58.0",
     "eslint": "^8.11.0"
   }
 }
