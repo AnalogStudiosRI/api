@@ -3,7 +3,17 @@
 ## Overview
 Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/www.analogstudios.net) (and friends) using [arc.codes](https://arc.codes/).
 
+## Local Setup
+
+Assumes valid [AWS credentials](https://arc.codes/docs/en/get-started/detailed-aws-setup) are either exported as environment variables or you have a relevant configuration setup in _~/aws/credentials_.
+
+1. Clone the repo
+1. Run `npm ci`
+1. Run `npm run arc env`
+1. Run `npm start`  to use the local sandbox for development
+
 ## Supported APIs
+
 ### Albums
 Structured events content sourced from [**Contentful**](https://planetscale.com) around the **Album** resource type.  Available at `/albums` internally and publicly as `/api/v2/albums`.
 
@@ -33,17 +43,3 @@ Structured events content sourced from the [**PlanetScale**](https://planetscale
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of a post
-
-## Setup
-
-Assumes valid [AWS credentials](https://arc.codes/docs/en/get-started/detailed-aws-setup) are either exported as environment variables or you have a relevant configuration setup in _~/aws/credentials_.
-
-1. Clone the repo
-1. Run `npm run ci`
-1. Run `npm run arc env`
-
-## Local Development
-
-To setup the local sandbox, run `npm start`.
-
-test2
