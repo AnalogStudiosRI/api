@@ -12,4 +12,5 @@ post /publish
 @aws
 # profile default
 region us-east-1
+runtime nodejs18.x
 architecture arm64
