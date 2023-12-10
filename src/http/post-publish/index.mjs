@@ -27,7 +27,7 @@ export async function handler(req = {}) {
     }
   };
 
-  if(accessToken === process.env.CONTENTFUL_WEBHOOK_ACCESS_TOKEN) {
+  if (accessToken === process.env.CONTENTFUL_WEBHOOK_ACCESS_TOKEN) {
     try {
       await cfClient.createInvalidation(params);
   
