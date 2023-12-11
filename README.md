@@ -8,17 +8,30 @@ Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/w
 ### Credentials
 Assumes valid [AWS credentials](https://arc.codes/docs/en/get-started/detailed-aws-setup) are either exported as environment variables or you have a relevant configuration setup in _~/aws/credentials_.
 
-Additionally, the following credentials files are required to run this project:
-1. _preferences.arc_
-    - `CONTENTFUL_ACCESS_TOKEN`
-    - `CONTENTFUL_SPACE`
-    - `CONTENTFUL_WEBHOOK_ACCESS_TOKEN`
-    - `DATABASE_URL`
-    - `AWS_ACCESS_KEY_ID`
-    - `AWS_SECRET_ACCESS_KEY`
-    - `AWS_CLOUDFRONT_ID`
-1. _.env_ (For Prisma)
-    - `DATABASE_URL`
+Additionally, the following credentials files are required to run this project for the various services and APIs exposed.
+
+#### _preferences.arc_
+
+For running the various APIs using the Architect sandbox.
+
+|             Name                 |     Service     |            Role              |
+|----------------------------------|-----------------|------------------------------|
+|`DATABASE_URL`                    | PlanetScale     | All APIs except Events       |
+|`CONTENTFUL_ACCESS_TOKEN`         | Contentful      | Events API                   |
+|`CONTENTFUL_SPACE`                | Contentful      | Events API                   |
+|`CONTENTFUL_WEBHOOK_ACCESS_TOKEN` | Contentful      | Publish API                  |
+|`AWS_ACCESS_KEY_ID`               | AWS             | Publish API                  |
+|`AWS_SECRET_ACCESS_KEY`           | AWS             | Publish API                  |
+|`AWS_CLOUDFRONT_ID`               | AWS             | Publish API                  |
+
+#### _.env_
+
+For running Prisma Studio.
+
+|             Name                 |     Service     |              Role             |
+|----------------------------------|-----------------|-------------------------------|
+|`DATABASE_URL`                    | PlanetScale     | All APIs except Events        |
+
 
 ### Install
 1. Clone the repo
