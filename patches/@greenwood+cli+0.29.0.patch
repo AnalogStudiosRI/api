@@ -1,8 +1,8 @@
 diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-index 5ce30c1..18113cd 100644
+index 5ce30c1..f4f4d0f 100644
 --- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
 +++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-@@ -167,9 +167,14 @@ async function walkPackageJson(packageJson = {}) {
+@@ -167,9 +167,15 @@ async function walkPackageJson(packageJson = {}) {
                ? esmPath
                : fallbackPath;
            } else if (exportMapEntry.import || exportMapEntry.default) {
@@ -10,6 +10,7 @@ index 5ce30c1..18113cd 100644
 -              ? exportMapEntry.import
 -              : exportMapEntry.default;
 +            // TODO this is super slow for some reason?  not sure if all the ?
++            // On Node 20 (for .env), this seems faster / not an issue, but then ES Modules Shim is 404???
 +            packageExport = exportMapEntry.import?.default?.default // https://unpkg.com/browse/tslib@2.6.2/package.json
 +              ? exportMapEntry.import.default.default
 +              : exportMapEntry.import?.default // https://unpkg.com/browse/lru-cache@10.1.0/package.json
