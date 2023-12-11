@@ -9,8 +9,10 @@
   },
   "scripts": {
     "arc": "arc",
+    "prisma": "prisma",
     "lint": "eslint \"*.*js\" \"./src/**/**/*.*js\"",
-    "start": "arc sandbox"
+    "start": "arc sandbox",
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^15.11.1",
@@ -20,6 +22,7 @@
   "devDependencies": {
     "@architect/architect": "^10.11.2",
     "@aws-sdk/client-cloudfront": "^3.58.0",
-    "eslint": "^8.11.0"
+    "eslint": "^8.11.0",
+    "prisma": "^5.7.0"
   }
 }

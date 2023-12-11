@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model albums {
+  id          Int     @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  title       String  @db.VarChar(100)
+  description String  @db.LongText
+  year        Int?
+  imageUrl    String? @db.LongText
+  downloadUrl String? @db.LongText
+  artistId    Int
+
+  @@index([artistId], map: "id_idx")
+}
+
+model artists {
+  id           Int     @id @default(autoincrement())
+  name         String  @unique(map: "name_UNIQUE") @db.VarChar(100)
+  imageUrl     String? @db.LongText
+  genre        String? @db.VarChar(45)
+  location     String? @db.VarChar(45)
+  label        String? @db.VarChar(45)
+  contactPhone Int?
+  contactEmail String? @db.VarChar(100)
+  bio          String  @db.LongText
+  isActive     Int?    @default(1)
+}
+
+model posts {
+  id          Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
+  title       String @db.VarChar(100)
+  summary     String @db.LongText
+  createdTime Int
+}
