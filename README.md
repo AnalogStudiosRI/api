@@ -5,12 +5,28 @@ Serverless APIs for [www.analogstudios.net](https://github.com/AnalogStudiosRI/w
 
 ## Local Setup
 
+### Credentials
 Assumes valid [AWS credentials](https://arc.codes/docs/en/get-started/detailed-aws-setup) are either exported as environment variables or you have a relevant configuration setup in _~/aws/credentials_.
 
+Additionally, the following credentials files are required to run this project:
+1. _preferences.arc_
+    - `CONTENTFUL_ACCESS_TOKEN`
+    - `CONTENTFUL_SPACE`
+    - `CONTENTFUL_WEBHOOK_ACCESS_TOKEN`
+    - `DATABASE_URL`
+    - `AWS_ACCESS_KEY_ID`
+    - `AWS_SECRET_ACCESS_KEY`
+    - `AWS_CLOUDFRONT_ID`
+1. _.env_ (For Prisma)
+    - `DATABASE_URL`
+
+### Install
 1. Clone the repo
 1. Run `npm ci`
 1. Run `npm run arc env`
-1. Run `npm start`  to use the local sandbox for development
+1. Run `npm start`  to use the local Architect sandbox for development
+
+To use [Prisma Studio](https://www.prisma.io/studio), run `npm run studio`
 
 ## Supported APIs
 
