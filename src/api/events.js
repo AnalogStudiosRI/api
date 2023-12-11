@@ -13,9 +13,10 @@ const client = contentful.createClient({
 });
 
 // learn more about HTTP functions here: https://arc.codes/http
-export async function handler (req) {
-  const params = req.queryStringParameters || {};
-  const { id, tag } = params;
+export async function handler (request) {
+  const params = new URLSearchParams(request.url.slice(request.url.indexOf('?')));
+  const id = params.has('id') ? params.get('id') : null;
+  const tag = params.has('tag') ? params.get('tag') : null;
 
   let events = (await client.getEntries('Event'))
     .items.map((event) => {
@@ -41,7 +42,7 @@ export async function handler (req) {
       };
     });
 
-  if (params) {
+  if (id || tag) {
     if (id) {
       events = [events.find(event => parseInt(event.id, 10) === parseInt(id, 10))];
     } else if (tag) {
@@ -49,13 +50,11 @@ export async function handler (req) {
     }
   }
 
-  return {
-    statusCode: 200,
-    headers: {
-      'cache-control': 'max-age=604800',
-      'content-type': 'application/json',
+  return new Response(JSON.stringify(events), {
+    headers: new Headers({
+      'Cache-Control': 'max-age=604800',
+      'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*'
-    },
-    body: JSON.stringify(events)
-  };
+    })
+  });
 }
