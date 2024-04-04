@@ -16,8 +16,8 @@
   },
   "dependencies": {
     "@contentful/rich-text-html-renderer": "^15.11.1",
-    "contentful": "^9.1.18",
-    "mysql2": "^3.6.5"
+    "@libsql/client": "^0.6.0",
+    "contentful": "^9.1.18"
   },
   "devDependencies": {
     "@architect/architect": "^10.11.2",
