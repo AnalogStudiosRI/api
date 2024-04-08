@@ -33,8 +33,7 @@ For running Prisma Studio.
 
 |             Name                 |     Service     |              Role             |
 |----------------------------------|-----------------|-------------------------------|
-|`DATABASE_URL`                    | Turso           | All APIs except Events       |
-|`DATABASE_TOKEN`                  | Turso           |                              |
+|`DATABASE_URL_LOCAL`              | Local SQLite    | All APIs except Events        |
 
 
 ### Install
@@ -43,6 +42,7 @@ For running Prisma Studio.
 1. Run `npm ci`
 1. Run `npm run arc env`
 1. Run `npm start`  to use the local Architect sandbox for development
+1. Make a copy of _.env.local_ and rename it to _.env_
 
 To use [Prisma Studio](https://www.prisma.io/studio), run `npm run studio`
 
