@@ -1,12 +1,15 @@
-import mysql from 'mysql2/promise';
+import { createClient } from '@libsql/client/web';
 
 export async function handler (req) {
   const params = req.queryStringParameters || {};
   const { id } = params;
-  const connection = await mysql.createConnection(process.env.DATABASE_URL);
-  const [rows] = id
-    ? await connection.execute('SELECT * FROM posts WHERE id = ?', [id])
-    : await connection.execute('SELECT * FROM posts');
+  const client = createClient({
+    url: process.env.DATABASE_URL,
+    authToken: process.env.DATABASE_TOKEN
+  });
+  const { rows } = id
+    ? await client.execute({ sql: 'SELECT * FROM posts WHERE id = ?', args: [id] })
+    : await client.execute('SELECT * FROM posts');
 
   return {
     statusCode: 200,

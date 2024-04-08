@@ -1,40 +1,41 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
 model albums {
-  id          Int     @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  title       String  @db.VarChar(100)
-  description String  @db.LongText
+  id          Int                      @id @unique(map: "sqlite_autoindex_albums_1") @default(autoincrement())
+  title       String
+  description Unsupported("longtext")
   year        Int?
-  imageUrl    String? @db.LongText
-  downloadUrl String? @db.LongText
+  imageUrl    Unsupported("longtext")?
+  downloadUrl Unsupported("longtext")?
   artistId    Int
 
-  @@index([artistId], map: "id_idx")
+  @@index([artistId], map: "idx_albums_id_idx")
 }
 
 model artists {
-  id           Int     @id @default(autoincrement())
-  name         String  @unique(map: "name_UNIQUE") @db.VarChar(100)
-  imageUrl     String? @db.LongText
-  genre        String? @db.VarChar(45)
-  location     String? @db.VarChar(45)
-  label        String? @db.VarChar(45)
+  id           Int                      @id @default(autoincrement())
+  name         String                   @unique(map: "sqlite_autoindex_artists_1")
+  imageUrl     Unsupported("longtext")?
+  genre        String?
+  location     String?
+  label        String?
   contactPhone Int?
-  contactEmail String? @db.VarChar(100)
-  bio          String  @db.LongText
-  isActive     Int?    @default(1)
+  contactEmail String?
+  bio          Unsupported("longtext")
+  isActive     Int?                     @default(1)
 }
 
 model posts {
-  id          Int    @id @unique(map: "id_UNIQUE") @default(autoincrement())
-  title       String @db.VarChar(100)
-  summary     String @db.LongText
+  id          Int                     @id @unique(map: "sqlite_autoindex_posts_1") @default(autoincrement())
+  title       String
+  summary     Unsupported("longtext")
   createdTime Int
 }
