@@ -33,7 +33,7 @@ For running Prisma Studio.
 
 |             Name                 |     Service     |              Role             |
 |----------------------------------|-----------------|-------------------------------|
-|`DATABASE_URL_LOCAL`              | Local SQLite    | All APIs except Events        |
+|`DATABASE_URL`                    | Local SQLite    | All APIs except Events        |
 
 
 ### Install
