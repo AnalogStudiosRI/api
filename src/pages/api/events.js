@@ -4,7 +4,7 @@
 process.env.TZ = 'America/New_York';
 
 // https://www.contentful.com/developers/docs/javascript/tutorials/using-js-cda-sdk/
-import contentful from 'contentful';
+import * as contentful from 'contentful';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 const client = contentful.createClient({
@@ -18,7 +18,7 @@ export async function handler (request) {
   const id = params.has('id') ? params.get('id') : null;
   const tag = params.has('tag') ? params.get('tag') : null;
 
-  let events = (await client.getEntries('Event'))
+  let events = (await client.getEntries({ content_type: 'event' })) // eslint-disable-line camelcase
     .items.map((event) => {
       const { id, description, endTime, startTime, title, link } = event.fields;
       const { tags = [] } = event.metadata;
