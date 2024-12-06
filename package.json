@@ -6,16 +6,15 @@
   "type": "module",
   "license": "MIT",
   "engines": {
-    "node": ">=18.12.1"
+    "node": ">=20.12.2"
   },
   "scripts": {
     "prisma": "prisma",
     "lint": "eslint \"*.*js\" \"./src/**/**/*.*js\"",
-    "dev": "greenwood develop",
-    "build": "greenwood build",
+    "dev": "node --env-file=.env ./node_modules/@greenwood/cli/src/index.js develop",
+    "build": "node --env-file=.env ./node_modules/@greenwood/cli/src/index.js build",
     "serve": "npm run clean && npm run build && greenwood serve",
-    "studio": "prisma studio",
-    "postinstall": "patch-package"
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.58.0",
@@ -24,10 +23,8 @@
     "contentful": "^9.1.18"
   },
   "devDependencies": {
-    "@aws-sdk/client-cloudfront": "^3.58.0",
-    "@greenwood/cli": "^0.29.0",
+    "@greenwood/cli": "^0.31.0-alpha.0",
     "eslint": "^8.11.0",
-    "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5"
   }

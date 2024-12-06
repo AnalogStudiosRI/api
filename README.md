@@ -35,7 +35,6 @@ For running Prisma Studio.
 |----------------------------------|-----------------|-------------------------------|
 |`DATABASE_URL`                    | Local SQLite    | All APIs except Events        |
 
-
 ### Install
 
 1. Clone the repo
@@ -50,7 +49,7 @@ To use [Prisma Studio](https://www.prisma.io/studio), run `npm run studio`
 
 ### Albums
 
-Data sourced from [**Turso**](https://turso.tech) for the **Album** resource type.  Available at `/albums` internally and publicly as `/api/v2/albums`.
+Data sourced from [**Turso**](https://turso.tech) for the **Album** resource type.  Available at `/api/albums` locally and publicly as `/api/v2/albums`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the album
@@ -60,14 +59,14 @@ _Options:_
 
 ### Artists
 
-Data sourced from [**Turso**](https://turso.tech) for the **Artist** resource type.  Available at `/artists` internally and publicly as `/api/v2/artists`.
+Data sourced from [**Turso**](https://turso.tech) for the **Artist** resource type.  Available at `/api/artists` locally and publicly as `/api/v2/artists`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the artist
 
 ### Events
 
-Structured events content sourced from [**Contentful**](https://contentful.com/) for the **Event** resource type.  Available at `/events` internally and publicly as `/api/v2/events`.
+Structured events content sourced from [**Contentful**](https://contentful.com/) for the **Event** resource type.  Available at `/api/events` locally and publicly as `/api/v2/events`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the event
@@ -77,7 +76,7 @@ _Options:_
 
 ### Posts
 
-Data sourced from [**Turso**](https://turso.tech) for the **Post** resource type.  Available at `/posts` internally and publicly as `/api/v2/posts`.
+Data sourced from [**Turso**](https://turso.tech) for the **Post** resource type.  Available at `/api/posts` locally and publicly as `/api/v2/posts`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of a post
