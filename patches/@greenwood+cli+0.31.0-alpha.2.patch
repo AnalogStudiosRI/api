@@ -1,0 +1,78 @@
+diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
+index 1abad09..cb90c4f 100644
+--- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
++++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
+@@ -66,7 +66,12 @@ function derivePackageRoot(resolved) {
+     root = root.replace(`${segment}/`, '');
+   }
+ 
+-  return root;
++  console.log('derivePackageRoot', { resolved, root });
++  console.log('--------------------------------------')
++
++  return root !== ''
++    ? root
++    : null;
+ }
+ 
+ // Helper function to convert export patterns to a regex (thanks ChatGPT :D)
+@@ -217,25 +222,49 @@ async function walkPackageJson(packageJson = {}) {
+       const resolved = resolveBareSpecifier(dependency);
+ 
+       if (resolved) {
++        console.log('parent resolve >>>', { dependency, resolved });
+         const resolvedRoot = derivePackageRoot(resolved);
+-        const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
+ 
+-        walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
++        if (resolvedRoot) {
++          const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
++
++          walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
+   
+-        if (resolvedPackageJson.dependencies) {
+-          for (const dependency in resolvedPackageJson.dependencies) {
+-            const resolved = resolveBareSpecifier(dependency);
++          if (resolvedPackageJson.dependencies) {
++            for (const dependency in resolvedPackageJson.dependencies) {
++              const resolved = resolveBareSpecifier(dependency);
+   
+-            if (resolved) {
+-              const resolvedRoot = derivePackageRoot(resolved);
+-              const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
++              console.log('child resolve >>>', { dependency, resolved });
++              if (resolved) {
++                const resolvedRoot = derivePackageRoot(resolved);
+ 
+-              walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
++                if (resolvedRoot) {
++                  const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
+   
+-              await walkPackageJson(resolvedPackageJson);
++                  walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
++    
++                  await walkPackageJson(resolvedPackageJson);
++                } else {
++                  // TODO add to diagnostics
++                  console.log('NO DERIVED PACKAGE ROOT', { resolvedRoot })
++                  console.log('--------------------------------------')
++                }
++              } else {
++                // TODO add to diagnostics
++                console.log('NO RESOLVED 222????', { dependency })
++                console.log('--------------------------------------')
++              }
+             }
+           }
++        } else {
++          // TODO add to diagnostics
++          console.log('NO DERIVED PACKAGE ROOT', { resolvedRoot })
++          console.log('--------------------------------------')
+         }
++      } else {
++        // TODO add to diagnostics
++        console.log('NO RESOLVED 111????', { dependency })
++        console.log('--------------------------------------')
+       }
+     }
+   } catch (e) {
