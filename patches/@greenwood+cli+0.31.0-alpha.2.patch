@@ -21,10 +21,20 @@ index 585f7de..1dc8b57 100644
  
    return [...compilation.manifest.apis.values()]
 diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-index 1abad09..a32f1e0 100644
+index 1abad09..b41fd87 100644
 --- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
 +++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-@@ -66,7 +66,12 @@ function derivePackageRoot(resolved) {
+@@ -8,7 +8,9 @@ const importMap = {};
+ const diagnostics = {};
+ 
+ function updateImportMap(key, value, resolvedRoot) {
++  // console.log('updateImportMap???', { key, value });
+   if (!importMap[key.replace('./', '')]) {
++    // console.log('updateImportMap >>>', key, `${IMPORT_MAP_RESOLVED_PREFIX}${resolvedRoot.replace('file://', '')}${value.replace('./', '')}`)
+     importMap[key.replace('./', '')] = `${IMPORT_MAP_RESOLVED_PREFIX}${resolvedRoot.replace('file://', '')}${value.replace('./', '')}`;
+   }
+ }
+@@ -66,7 +68,12 @@ function derivePackageRoot(resolved) {
      root = root.replace(`${segment}/`, '');
    }
  
@@ -38,7 +48,22 @@ index 1abad09..a32f1e0 100644
  }
  
  // Helper function to convert export patterns to a regex (thanks ChatGPT :D)
-@@ -217,25 +222,49 @@ async function walkPackageJson(packageJson = {}) {
+@@ -210,32 +217,41 @@ async function walkPackageForExports(dependency, packageJson, resolvedRoot) {
+   }
+ }
+ 
++const parents = {};
++
+ // https://nodejs.org/api/packages.html#package-entry-points
+-async function walkPackageJson(packageJson = {}) {
++async function walkPackageJson(packageJson = {}, parent) {
+   try {
+-    for (const dependency of Object.keys(packageJson.dependencies || {})) {
++    // console.log('walkPackageJson', { parent, packageJson });
++    const dependencies = Object.keys(packageJson.dependencies || {});
++
++    for (const dependency of dependencies) {
++      // console.log('######', { dependency })
        const resolved = resolveBareSpecifier(dependency);
  
        if (resolved) {
@@ -48,43 +73,25 @@ index 1abad09..a32f1e0 100644
  
 -        walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
 +        if (resolvedRoot) {
++          // console.log({ resolvedRoot });
 +          const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
-+
-+          walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
  
 -        if (resolvedPackageJson.dependencies) {
 -          for (const dependency in resolvedPackageJson.dependencies) {
 -            const resolved = resolveBareSpecifier(dependency);
-+          if (resolvedPackageJson.dependencies) {
-+            for (const dependency in resolvedPackageJson.dependencies) {
-+              const resolved = resolveBareSpecifier(dependency);
++          walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
  
 -            if (resolved) {
 -              const resolvedRoot = derivePackageRoot(resolved);
 -              const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
-+              // console.log('child resolve >>>', { dependency, resolved });
-+              if (resolved) {
-+                const resolvedRoot = derivePackageRoot(resolved);
- 
+-
 -              walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
-+                if (resolvedRoot) {
-+                  const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
-   
+-
 -              await walkPackageJson(resolvedPackageJson);
-+                  walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
-+
-+                  await walkPackageJson(resolvedPackageJson);
-+                } else {
-+                  // TODO add to diagnostics
-+                  console.log('NO DERIVED PACKAGE ROOT', { resolvedRoot })
-+                  console.log('--------------------------------------')
-+                }
-+              } else {
-+                // TODO add to diagnostics
-+                console.log('NO RESOLVED 222????', { dependency })
-+                console.log('--------------------------------------')
-+              }
-             }
+-            }
++          if (!parents[`${resolvedPackageJson.name}-${resolvedPackageJson.version}`]) {
++            parents[`${resolvedPackageJson.name}-${resolvedPackageJson.version}`] = true;
++            await walkPackageJson(resolvedPackageJson, dependency);
            }
 +        } else {
 +          // TODO add to diagnostics
