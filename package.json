@@ -13,7 +13,7 @@
     "prisma": "prisma",
     "lint": "eslint \"*.*js\" \"./src/**/**/*.*js\"",
     "dev": "node --env-file=.env ./node_modules/@greenwood/cli/src/index.js develop",
-    "build": "node --env-file=.env ./node_modules/@greenwood/cli/src/index.js build",
+    "build": "greenwood build",
     "serve": "npm run clean && npm run build && node --env-file=.env ./node_modules/@greenwood/cli/src/index.js serve",
     "studio": "prisma studio",
     "postinstall": "patch-package"

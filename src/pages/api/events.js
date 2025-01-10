@@ -7,13 +7,14 @@ process.env.TZ = 'America/New_York';
 import * as contentful from 'contentful';
 import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
-const client = contentful.createClient({
-  space: process.env.CONTENTFUL_SPACE,
-  accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
-});
+const { CONTENTFUL_SPACE, CONTENTFUL_ACCESS_TOKEN } = process.env;
 
 // learn more about HTTP functions here: https://arc.codes/http
 export async function handler (request) {
+  const client = contentful.createClient({
+    space: CONTENTFUL_SPACE,
+    accessToken: CONTENTFUL_ACCESS_TOKEN
+  });
   const params = new URLSearchParams(request.url.slice(request.url.indexOf('?')));
   const id = params.has('id') ? params.get('id') : null;
   const tag = params.has('tag') ? params.get('tag') : null;
