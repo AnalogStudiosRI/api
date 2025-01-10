@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf ./public .greenwood",
     "prisma": "prisma",
-    "lint": "eslint \"*.*js\" \"./src/**/**/*.*js\"",
+    "lint": "eslint",
     "dev": "node --env-file=.env ./node_modules/@greenwood/cli/src/index.js develop",
     "build": "greenwood build",
     "serve": "npm run clean && npm run build && node --env-file=.env ./node_modules/@greenwood/cli/src/index.js serve",
@@ -25,8 +25,9 @@
     "contentful": "11.3.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.11.1",
     "@greenwood/cli": "^0.31.0-alpha.2",
-    "eslint": "^8.11.0",
+    "eslint": "^9.11.1",
     "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5"

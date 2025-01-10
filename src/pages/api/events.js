@@ -19,7 +19,7 @@ export async function handler (request) {
   const id = params.has('id') ? params.get('id') : null;
   const tag = params.has('tag') ? params.get('tag') : null;
 
-  let events = (await client.getEntries({ content_type: 'event' })) // eslint-disable-line camelcase
+  let events = (await client.getEntries({ content_type: 'event' }))
     .items.map((event) => {
       const { id, description, endTime, startTime, title, link } = event.fields;
       const { tags = [] } = event.metadata;
