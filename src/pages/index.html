@@ -42,10 +42,11 @@
 
       window.addEventListener('DOMContentLoaded', function() {
         // resources
-        document.getElementById('posts').addEventListener('click', () => fetchResource('posts'));
-        document.getElementById('artists').addEventListener('click', () => fetchResource('artists'));
-        document.getElementById('albums').addEventListener('click', () => fetchResource('albums'));
-        document.getElementById('events').addEventListener('click', () => fetchResource('events'));
+        const resources = ['posts', 'artists', 'albums', 'events'];
+
+        resources.forEach((resource) => {
+          document.getElementById(resource).addEventListener('click', () => fetchResource(resource))
+        })
 
         // webhooks
         document.getElementById('contentful').addEventListener('click', () => triggerWebhook('contentful'));
