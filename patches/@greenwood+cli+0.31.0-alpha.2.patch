@@ -1,17 +1,18 @@
 diff --git a/node_modules/@greenwood/cli/src/config/rollup.config.js b/node_modules/@greenwood/cli/src/config/rollup.config.js
-index 585f7de..73bd414 100644
+index 585f7de..04dec5e 100644
 --- a/node_modules/@greenwood/cli/src/config/rollup.config.js
 +++ b/node_modules/@greenwood/cli/src/config/rollup.config.js
-@@ -31,7 +31,7 @@ function greenwoodResourceLoader (compilation, browser = false) {
+@@ -31,7 +31,8 @@ function greenwoodResourceLoader (compilation, browser = false) {
  
        // check for non bare paths and resolve them to the user's workspace
        // or Greenwood's scratch dir, like when bundling inline <script> tags
 -      if (normalizedId.startsWith('.')) {
 +      if (normalizedId.startsWith('.') && importer.startsWith(userWorkspace.pathname)) {
++        console.log({ id, importer, normalizedId });
          const importerUrl = new URL(normalizedId, `file://${importer}`);
          const type = options.attributes?.type ?? '';
          // if we are polyfilling import attributes for the browser we will want Rollup to bundles these as JS files
-@@ -632,6 +632,7 @@ const getRollupConfigForBrowserScripts = async (compilation) => {
+@@ -632,6 +633,7 @@ const getRollupConfigForBrowserScripts = async (compilation) => {
  };
  
  const getRollupConfigForApiRoutes = async (compilation) => {
@@ -19,16 +20,8 @@ index 585f7de..73bd414 100644
    const { outputDir } = compilation.context;
  
    return [...compilation.manifest.apis.values()]
-@@ -641,6 +642,7 @@ const getRollupConfigForApiRoutes = async (compilation) => {
-       return { id, inputPath: normalizePathnameForWindows(new URL(pageHref)) };
-     })
-     .map(({ id, inputPath }) => {
-+      console.log('>>>>>', { id, inputPath });
-       return {
-         input: inputPath,
-         output: {
 diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-index 1abad09..b41fd87 100644
+index 1abad09..6874285 100644
 --- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
 +++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
 @@ -8,7 +8,9 @@ const importMap = {};
@@ -41,29 +34,42 @@ index 1abad09..b41fd87 100644
      importMap[key.replace('./', '')] = `${IMPORT_MAP_RESOLVED_PREFIX}${resolvedRoot.replace('file://', '')}${value.replace('./', '')}`;
    }
  }
-@@ -66,7 +68,12 @@ function derivePackageRoot(resolved) {
-     root = root.replace(`${segment}/`, '');
+@@ -23,7 +25,10 @@ function resolveBareSpecifier(specifier) {
+   try {
+     resolvedPath = import.meta.resolve(specifier);
+   } catch (e) {
+-    diagnostics[specifier] = `ERROR (${e.code}): unable to resolve specifier => \`${specifier}\` \n${e.message}`;
++    if (e.code === 'XXX') {
++      return;
++    }
++    diagnostics[specifier] = `WARNING (${e.code}): unable to resolve specifier => \`${specifier}\` \n${e.message}`;
+   }
+ 
+   return resolvedPath;
+@@ -63,10 +68,13 @@ function derivePackageRoot(resolved) {
+       }
+     }
+ 
+-    root = root.replace(`${segment}/`, '');
++    // root = root.replace(`${segment}/`, '');
++    root = root.substring(0, root.lastIndexOf(segment))
    }
  
 -  return root;
-+  // console.log('derivePackageRoot', { resolved, root });
-+  // console.log('--------------------------------------')
-+
 +  return root !== ''
 +    ? root
 +    : null;
  }
  
  // Helper function to convert export patterns to a regex (thanks ChatGPT :D)
-@@ -210,32 +217,41 @@ async function walkPackageForExports(dependency, packageJson, resolvedRoot) {
+@@ -210,31 +218,34 @@ async function walkPackageForExports(dependency, packageJson, resolvedRoot) {
    }
  }
  
 +const parents = {};
 +
  // https://nodejs.org/api/packages.html#package-entry-points
--async function walkPackageJson(packageJson = {}) {
-+async function walkPackageJson(packageJson = {}, parent) {
+ async function walkPackageJson(packageJson = {}) {
    try {
 -    for (const dependency of Object.keys(packageJson.dependencies || {})) {
 +    // console.log('walkPackageJson', { parent, packageJson });
@@ -96,19 +102,28 @@ index 1abad09..b41fd87 100644
 -
 -              await walkPackageJson(resolvedPackageJson);
 -            }
-+          if (!parents[`${resolvedPackageJson.name}-${resolvedPackageJson.version}`]) {
-+            parents[`${resolvedPackageJson.name}-${resolvedPackageJson.version}`] = true;
++          if (!parents[resolvedPackageJson.name]) {
++            parents[resolvedPackageJson.name] = true;
 +            await walkPackageJson(resolvedPackageJson, dependency);
            }
 +        } else {
-+          // TODO add to diagnostics
-+          console.log('NO DERIVED PACKAGE ROOT', { resolvedRoot })
-+          console.log('--------------------------------------')
++          diagnostics[dependency] = `WARNING: No package.json resolved for => \`${dependency}\`, resolved to \`${resolved}\``;
          }
-+      } else {
-+        // TODO add to diagnostics
-+        console.log('NO RESOLVED 111????', { dependency })
-+        console.log('--------------------------------------')
        }
      }
-   } catch (e) {
+diff --git a/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js b/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js
+index ff22e43..f32fb06 100644
+--- a/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js
++++ b/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js
+@@ -83,9 +83,9 @@ class NodeModulesResource extends ResourceInterface {
+       if (Object.keys(diagnostics).length > 0) {
+         console.log('****************************************************************************');
+         Object.keys(diagnostics).forEach((diagnostic) => {
+-          console.warn(diagnostics[diagnostic]);
++          console.warn(`- ${diagnostics[diagnostic]}\n`);
+         });
+-        console.log('Learn more about these warnings at => https://greenwoodjs.dev/docs/introduction/web-standards/#import-maps');
++        console.log('>>> Learn more about these warnings at https://greenwoodjs.dev/docs/introduction/web-standards/#import-maps <<<');
+         console.log('****************************************************************************');
+       }
+ 
