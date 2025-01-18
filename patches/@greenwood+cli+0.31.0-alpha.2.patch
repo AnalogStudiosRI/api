@@ -21,10 +21,16 @@ index 585f7de..04dec5e 100644
  
    return [...compilation.manifest.apis.values()]
 diff --git a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-index 1abad09..6874285 100644
+index 1abad09..e1ab7d5 100644
 --- a/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
 +++ b/node_modules/@greenwood/cli/src/lib/walker-package-ranger.js
-@@ -8,7 +8,9 @@ const importMap = {};
+@@ -1,4 +1,5 @@
+ import fs from 'fs';
++import { isBuiltin } from 'node:module';
+ 
+ /* eslint-disable max-depth,complexity */
+ // priority if from L -> R
+@@ -8,7 +9,9 @@ const importMap = {};
  const diagnostics = {};
  
  function updateImportMap(key, value, resolvedRoot) {
@@ -34,7 +40,7 @@ index 1abad09..6874285 100644
      importMap[key.replace('./', '')] = `${IMPORT_MAP_RESOLVED_PREFIX}${resolvedRoot.replace('file://', '')}${value.replace('./', '')}`;
    }
  }
-@@ -23,7 +25,10 @@ function resolveBareSpecifier(specifier) {
+@@ -23,7 +26,10 @@ function resolveBareSpecifier(specifier) {
    try {
      resolvedPath = import.meta.resolve(specifier);
    } catch (e) {
@@ -46,7 +52,7 @@ index 1abad09..6874285 100644
    }
  
    return resolvedPath;
-@@ -63,10 +68,13 @@ function derivePackageRoot(resolved) {
+@@ -63,10 +69,13 @@ function derivePackageRoot(resolved) {
        }
      }
  
@@ -62,7 +68,7 @@ index 1abad09..6874285 100644
  }
  
  // Helper function to convert export patterns to a regex (thanks ChatGPT :D)
-@@ -210,31 +218,34 @@ async function walkPackageForExports(dependency, packageJson, resolvedRoot) {
+@@ -210,30 +219,39 @@ async function walkPackageForExports(dependency, packageJson, resolvedRoot) {
    }
  }
  
@@ -99,18 +105,22 @@ index 1abad09..6874285 100644
 -              const resolvedPackageJson = (await import(new URL('./package.json', resolvedRoot), { with: { type: 'json' } })).default;
 -
 -              walkPackageForExports(dependency, resolvedPackageJson, resolvedRoot);
--
--              await walkPackageJson(resolvedPackageJson);
--            }
 +          if (!parents[resolvedPackageJson.name]) {
 +            parents[resolvedPackageJson.name] = true;
 +            await walkPackageJson(resolvedPackageJson, dependency);
-           }
++          }
 +        } else {
-+          diagnostics[dependency] = `WARNING: No package.json resolved for => \`${dependency}\`, resolved to \`${resolved}\``;
++          // console.log({ resolved });
++          // console.log('isBuilt-in ????', isBuiltin(resolved));
+ 
+-              await walkPackageJson(resolvedPackageJson);
+-            }
++          // https://github.com/nodejs/node/issues/56652#issuecomment-2599803744
++          if (!isBuiltin(resolved)) {
++            diagnostics[dependency] = `WARNING: No package.json resolved for => \`${dependency}\`, resolved to \`${resolved}\``;
+           }
          }
        }
-     }
 diff --git a/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js b/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js
 index ff22e43..f32fb06 100644
 --- a/node_modules/@greenwood/cli/src/plugins/resource/plugin-node-modules.js
