@@ -9,20 +9,45 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 
 const { CONTENTFUL_SPACE, CONTENTFUL_ACCESS_TOKEN } = process.env;
 
-// learn more about HTTP functions here: https://arc.codes/http
-export async function handler (request) {
+type Event = {
+  id: Number,
+  description: String,
+  endTime: Number,
+  startTime: Number,
+  title: String,
+  link: String,
+  tags: Array<String>
+}
+
+type EventEntry = {
+  id: contentful.EntryFieldTypes.Number,
+  description: contentful.EntryFieldTypes.RichText,
+  endTime: contentful.EntryFieldTypes.Date,
+  startTime: contentful.EntryFieldTypes.Date,
+  title: contentful.EntryFieldTypes.Text,
+  link: contentful.EntryFieldTypes.Text,
+  metadata: {
+    tags: Array<String>
+  }
+}
+
+type EventEntrySkeleton = {
+  contentTypeId: 'event',
+  fields: EventEntry
+}
+
+export async function handler (request: Request) {
   const client = contentful.createClient({
-    space: CONTENTFUL_SPACE,
-    accessToken: CONTENTFUL_ACCESS_TOKEN
+    space: CONTENTFUL_SPACE ?? '',
+    accessToken: CONTENTFUL_ACCESS_TOKEN ?? ''
   });
   const params = new URLSearchParams(request.url.slice(request.url.indexOf('?')));
   const id = params.has('id') ? params.get('id') : null;
   const tag = params.has('tag') ? params.get('tag') : null;
-
-  let events = (await client.getEntries({ content_type: 'event' }))
-    .items.map((event) => {
+  const events: Array<Event> = (await client.getEntries<EventEntrySkeleton>({ content_type: 'event' }))
+    .items.map((event): Event => {
       const { id, description, endTime, startTime, title, link } = event.fields;
-      const { tags = [] } = event.metadata;
+      const { tags } = event.metadata;
 
       return {
         id,
@@ -42,16 +67,19 @@ export async function handler (request) {
         })
       };
     });
+  let results: Array<Event> | [] = events;
 
   if (id || tag) {
     if (id) {
-      events = [events.find(event => parseInt(event.id, 10) === parseInt(id, 10))];
+      const event = events.find((event) => event.id === parseInt(id, 10));
+
+      results = event ? [event] : [];
     } else if (tag) {
-      events = events.filter(event => event.tags.includes(tag));
+      results = events.filter(event => event.tags.includes(tag));
     }
   }
 
-  return new Response(JSON.stringify(events), {
+  return new Response(JSON.stringify(results), {
     headers: new Headers({
       'Cache-Control': 'max-age=604800',
       'Content-Type': 'application/json',
