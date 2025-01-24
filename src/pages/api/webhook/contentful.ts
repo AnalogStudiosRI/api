@@ -1,5 +1,16 @@
 import * as AWS from '@aws-sdk/client-cloudfront';
 
+type CloudfrontInvalidationParams = {
+  DistributionId: string,
+  InvalidationBatch: {
+    CallerReference: string,
+    Paths: {
+      Quantity: number,
+      Items: Array<string>
+    }
+  }
+}
+
 const CONFIG = {
   region: 'us-east-1',
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -7,7 +18,7 @@ const CONFIG = {
   distributionId: process.env.AWS_CLOUDFRONT_ID
 };
 
-export async function handler (request) {
+export async function handler (request: Request) {
   // TODO - double check for adapter https://stackoverflow.com/a/55354185/417806
   const cfClient = new AWS.CloudFront(CONFIG);
   const body = await request.json();
@@ -18,10 +29,10 @@ export async function handler (request) {
     : null;
 
   // invalidate index.html in Cloudfront
-  const params = {
-    DistributionId: CONFIG.distributionId,
+  const params: CloudfrontInvalidationParams = {
+    DistributionId: CONFIG.distributionId ?? '',
     InvalidationBatch: {
-      CallerReference: new Date().getTime(),
+      CallerReference: new Date().getTime().toString(),
       Paths: {
         Quantity: 1,
         Items: [

@@ -10,13 +10,13 @@ import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
 const { CONTENTFUL_SPACE, CONTENTFUL_ACCESS_TOKEN } = process.env;
 
 type Event = {
-  id: Number,
-  description: String,
-  endTime: Number,
-  startTime: Number,
-  title: String,
-  link: String,
-  tags: Array<String>
+  id: number,
+  description: string,
+  endTime: number,
+  startTime: number,
+  title: string,
+  link: string,
+  tags: Array<string>
 }
 
 type EventEntry = {
@@ -27,7 +27,7 @@ type EventEntry = {
   title: contentful.EntryFieldTypes.Text,
   link: contentful.EntryFieldTypes.Text,
   metadata: {
-    tags: Array<String>
+    tags: Array<string>
   }
 }
 
