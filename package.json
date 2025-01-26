@@ -15,8 +15,7 @@
     "dev": "node --env-file=.env --import @greenwood/cli/register ./node_modules/@greenwood/cli/src/index.js develop",
     "build": "node --import @greenwood/cli/register ./node_modules/@greenwood/cli/src/index.js build",
     "serve": "npm run clean && npm run build && node --env-file=.env ./node_modules/@greenwood/cli/src/index.js serve",
-    "studio": "prisma studio",
-    "postinstall": "patch-package"
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.726.0",
@@ -26,10 +25,9 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
-    "@greenwood/cli": "^0.31.0-alpha.5",
-    "@greenwood/plugin-typescript": "^0.31.0-alpha.5",
+    "@greenwood/cli": "^0.31.0-alpha.6",
+    "@greenwood/plugin-typescript": "^0.31.0-alpha.6",
     "eslint": "^9.11.1",
-    "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5"
   }
