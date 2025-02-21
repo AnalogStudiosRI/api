@@ -80,3 +80,11 @@ Data sourced from [**Turso**](https://turso.tech) for the **Post** resource type
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of a post
+
+## Release Management
+
+With the appropriate AWS environment variables in place (either locally `export`ed, in GitHub Actions, or configured through Arc / AWS), the follow workflows are available and integrated into GitHub Actions
+
+- `npm run deploy:sandbox` - Build the project and test with Arc's local sandbox
+- `npm run deploy:staging` - Build and deploy for staging environment (runs on PRs)
+- `npm run deploy:production` - Build and deploy for production environment (runs on merge into mainline)

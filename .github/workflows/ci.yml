@@ -1,4 +1,4 @@
-name: Continuous Integration
+name: Staging
 
 on: [pull_request]
 
@@ -26,9 +26,9 @@ jobs:
     - name: Build
       run: |
         npm run build
-    # - name: Deploy Staging
-    #   env:
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-    #   run: |
-    #     npm run arc deploy -- --staging
+    - name: Deploy Preview
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        npm run deploy:staging

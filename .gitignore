@@ -1,5 +1,7 @@
-node_modules/
-preferences.arc
+.aws-output/
 .env
 .greenwood/
+node_modules/
+preferences.arc
 public/
+sam.*
