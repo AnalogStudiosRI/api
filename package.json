@@ -10,7 +10,7 @@
   },
   "scripts": {
     "arc": "arc",
-    "clean": "rimraf ./public .greenwood",
+    "clean": "rimraf ./public .greenwood .aws-output",
     "prisma": "prisma",
     "lint": "eslint && tsc --project tsconfig.json",
     "dev": "node --env-file=.env --import @greenwood/cli/register --experimental-strip-types ./node_modules/@greenwood/cli/src/index.js develop",
@@ -19,7 +19,8 @@
     "deploy:sandbox": "npm run build && arc sandbox",
     "deploy:staging": "npm run arc deploy -- --staging",
     "deploy:prod": "npm run arc deploy -- --production",
-    "studio": "prisma studio"
+    "studio": "prisma studio",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.726.0",
@@ -33,6 +34,7 @@
     "@greenwood/cli": "^0.32.0-alpha.5",
     "@greenwood/plugin-adapter-aws": "^0.32.0-alpha.5",
     "eslint": "^9.11.1",
+    "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.8.2"

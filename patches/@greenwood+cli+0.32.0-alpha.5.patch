@@ -1,0 +1,57 @@
+diff --git a/node_modules/@greenwood/cli/src/config/rollup.config.js b/node_modules/@greenwood/cli/src/config/rollup.config.js
+index ae49d05..eb927ee 100644
+--- a/node_modules/@greenwood/cli/src/config/rollup.config.js
++++ b/node_modules/@greenwood/cli/src/config/rollup.config.js
+@@ -180,12 +180,29 @@ function greenwoodSyncSsrEntryPointsOutputPaths(compilation) {
+   };
+ }
+ 
++// TODO needed for SSR pages too?
++function getAllBundleChunks(key, bundles) {
++  const chunks = [];
++
++  // impmorts
++  // dynamic imports
++  for(const bundle in bundles) {
++    const { fileName } = bundles[bundle];
++    if(fileName !== key && fileName.startsWith(key.replace('.js', ''))) {
++      chunks.push(bundles[bundle].fileName)
++    }
++  }
++
++  return chunks;
++}
++
+ function greenwoodSyncApiRoutesOutputPath(compilation) {
+   return {
+     name: "greenwood-sync-api-routes-output-paths",
+     generateBundle(options, bundle) {
+       const { basePath } = compilation.config;
+       const { apisDir, outputDir } = compilation.context;
++      const assetMapper = {};
+ 
+       // map rollup bundle names back to original API routes for syncing input <> output bundle names in the manifest
+       Object.keys(bundle).forEach((key) => {
+@@ -197,13 +214,22 @@ function greenwoodSyncApiRoutesOutputPath(compilation) {
+           const route = `/api${relativeFacade}`;
+ 
+           if (compilation.manifest.apis.has(route)) {
++            // console.log('???????', bundle[key])
++            // console.log('11111', bundle[key].imports);
++            // console.log('22222', bundle[key].modules);
+             const api = compilation.manifest.apis.get(route);
++            const linkedAssets = getAllBundleChunks(key, bundle).map(chunk => new URL(`./api/${chunk}`, outputDir).href);
+ 
+             compilation.manifest.apis.set(route, {
+               ...api,
+               outputHref: new URL(`./api/${key}`, outputDir).href,
++              assets: api.assets
++                ? [...api.assets, ...linkedAssets]
++                : linkedAssets
+             });
+           }
++        } else {
++          // console.log('NONONON', bundle[key])
+         }
+       });
+     },
