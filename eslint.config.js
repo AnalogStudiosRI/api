@@ -6,6 +6,7 @@ export default [
     // https://github.com/eslint/eslint/discussions/18304#discussioncomment-9069706
     ignores: [
       '.greenwood/*',
+      '.aws-output/*',
       'node_modules/*',
       'public/*',
       'prisma/*',

@@ -12,10 +12,10 @@
     "arc": "arc",
     "clean": "rimraf ./public .greenwood",
     "prisma": "prisma",
-    "lint": "eslint",
-    "dev": "node --env-file=.env --import @greenwood/cli/register ./node_modules/@greenwood/cli/src/index.js develop",
-    "build": "node --import @greenwood/cli/register ./node_modules/@greenwood/cli/src/index.js build",
-    "serve": "npm run clean && npm run build && node --env-file=.env ./node_modules/@greenwood/cli/src/index.js serve",
+    "lint": "eslint && tsc --project tsconfig.json",
+    "dev": "node --env-file=.env --import @greenwood/cli/register --experimental-strip-types ./node_modules/@greenwood/cli/src/index.js develop",
+    "build": "node --import @greenwood/cli/register --experimental-strip-types ./node_modules/@greenwood/cli/src/index.js build",
+    "serve": "npm run clean && npm run build && node --env-file=.env --experimental-strip-types ./node_modules/@greenwood/cli/src/index.js serve",
     "deploy:sandbox": "npm run build && arc sandbox",
     "deploy:staging": "npm run arc deploy -- --staging",
     "deploy:prod": "npm run arc deploy -- --production",
@@ -30,10 +30,11 @@
   "devDependencies": {
     "@architect/architect": "^10.11.2",
     "@eslint/js": "^9.11.1",
-    "@greenwood/cli": "^0.31.0",
-    "@greenwood/plugin-typescript": "^0.31.0",
+    "@greenwood/cli": "^0.32.0-alpha.5",
+    "@greenwood/plugin-adapter-aws": "^0.32.0-alpha.5",
     "eslint": "^9.11.1",
     "prisma": "^5.7.0",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "typescript": "^5.8.2"
   }
 }
