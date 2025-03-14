@@ -25,5 +25,5 @@ api
 @aws
 # profile default
 region us-east-1
-runtime nodejs18.x
+runtime nodejs22.x
 architecture arm64
