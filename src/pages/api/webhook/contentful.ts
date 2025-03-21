@@ -19,7 +19,6 @@ const CONFIG = {
 };
 
 export async function handler (request: Request) {
-  // TODO - double check for adapter https://stackoverflow.com/a/55354185/417806
   const cfClient = new AWS.CloudFront(CONFIG);
   const body = await request.json();
   const headers = request.headers;
