@@ -19,8 +19,7 @@
     "deploy:sandbox": "npm run build && arc sandbox",
     "deploy:staging": "npm run arc deploy -- --staging",
     "deploy:prod": "npm run arc deploy -- --production",
-    "studio": "prisma studio",
-    "postinstall": "patch-package"
+    "studio": "prisma studio"
   },
   "dependencies": {
     "@aws-sdk/client-cloudfront": "^3.726.0",
@@ -31,10 +30,9 @@
   "devDependencies": {
     "@architect/architect": "^11.1.0",
     "@eslint/js": "^9.11.1",
-    "@greenwood/cli": "^0.32.0-alpha.5",
-    "@greenwood/plugin-adapter-aws": "^0.32.0-alpha.5",
+    "@greenwood/cli": "^0.32.0-alpha.8",
+    "@greenwood/plugin-adapter-aws": "^0.32.0-alpha.8",
     "eslint": "^9.11.1",
-    "patch-package": "^8.0.0",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5",
     "typescript": "^5.8.2"
