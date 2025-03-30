@@ -22,9 +22,6 @@ export async function handler (request: Request) {
   const cfClient = new AWS.CloudFront(CONFIG);
   const body = await request.json();
   const headers = request.headers;
-  console.log('???? 0000', typeof body);
-  console.log('???? 1111', body);
-  console.log('???? 2222', body.sys);
   const entity = body?.sys.contentType.sys.id || '';
   const accessToken = headers.has('x-contentful_webhook_access_token')
     ? headers.get('x-contentful_webhook_access_token')
