@@ -30,8 +30,8 @@
   "devDependencies": {
     "@architect/architect": "^11.1.0",
     "@eslint/js": "^9.11.1",
-    "@greenwood/cli": "^0.32.0-alpha.9",
-    "@greenwood/plugin-adapter-aws": "^0.32.0-alpha.9",
+    "@greenwood/cli": "^0.32.0",
+    "@greenwood/plugin-adapter-aws": "^0.32.0",
     "eslint": "^9.11.1",
     "prisma": "^5.7.0",
     "rimraf": "^5.0.5",
