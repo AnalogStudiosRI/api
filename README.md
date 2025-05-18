@@ -35,12 +35,12 @@ For running Prisma Studio.
 |----------------------------------|-----------------|-------------------------------|
 |`DATABASE_URL`                    | Local SQLite    | All APIs except Events        |
 
-
 ### Install
 
 1. Clone the repo
 1. Run `npm ci`
 1. Run `npm run arc env`
+1. Run `npm run prisma db push`
 1. Run `npm start`  to use the local Architect sandbox for development
 1. Make a copy of _.env.local_ and rename it to _.env_
 
@@ -50,7 +50,7 @@ To use [Prisma Studio](https://www.prisma.io/studio), run `npm run studio`
 
 ### Albums
 
-Data sourced from [**Turso**](https://turso.tech) for the **Album** resource type.  Available at `/albums` internally and publicly as `/api/v2/albums`.
+Data sourced from [**Turso**](https://turso.tech) for the **Album** resource type.  Available at `/api/albums` locally and publicly as `/api/v2/albums`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the album
@@ -60,14 +60,14 @@ _Options:_
 
 ### Artists
 
-Data sourced from [**Turso**](https://turso.tech) for the **Artist** resource type.  Available at `/artists` internally and publicly as `/api/v2/artists`.
+Data sourced from [**Turso**](https://turso.tech) for the **Artist** resource type.  Available at `/api/artists` locally and publicly as `/api/v2/artists`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the artist
 
 ### Events
 
-Structured events content sourced from [**Contentful**](https://contentful.com/) for the **Event** resource type.  Available at `/events` internally and publicly as `/api/v2/events`.
+Structured events content sourced from [**Contentful**](https://contentful.com/) for the **Event** resource type.  Available at `/api/events` locally and publicly as `/api/v2/events`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of the event
@@ -77,7 +77,15 @@ _Options:_
 
 ### Posts
 
-Data sourced from [**Turso**](https://turso.tech) for the **Post** resource type.  Available at `/posts` internally and publicly as `/api/v2/posts`.
+Data sourced from [**Turso**](https://turso.tech) for the **Post** resource type.  Available at `/api/posts` locally and publicly as `/api/v2/posts`.
 
 _Options:_
 - `?id=xxx` - Filter by the `id` of a post
+
+## Release Management
+
+With the appropriate AWS environment variables in place (either locally `export`ed, in GitHub Actions, or configured through Arc / AWS), the follow workflows are available and integrated into GitHub Actions
+
+- `npm run deploy:sandbox` - Build the project and test with Arc's local sandbox
+- `npm run deploy:staging` - Build and deploy for staging environment (runs on PRs)
+- `npm run deploy:production` - Build and deploy for production environment (runs on merge into mainline)

@@ -1,4 +1,4 @@
-name: Main Integration
+name: Production
 
 on:
   push:
@@ -8,24 +8,27 @@ on:
 jobs:
 
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node: [18]
+        node: [22]
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node }}
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node }}
     - name: Installing project dependencies
       run: |
         npm ci
+    - name: Build
+      run: |
+        npm run build
     - name: Deploy Production
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
-        npm run arc deploy -- --production
+        npm run deploy:prod
