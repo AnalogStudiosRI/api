@@ -7,7 +7,8 @@
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "noImplicitAny": true,
-    "noEmit": true
+    "noEmit": true,
+    "strict": true
   },
   "include": [
     "./src/**/*.ts"
