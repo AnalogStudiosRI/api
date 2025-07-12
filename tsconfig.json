@@ -5,7 +5,8 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": true,
+    "noImplicitAny": true,
     "noEmit": true
   },
   "include": [
