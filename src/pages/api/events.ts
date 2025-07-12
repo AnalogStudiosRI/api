@@ -36,7 +36,7 @@ type EventEntrySkeleton = {
   fields: EventEntry
 }
 
-export async function handler (request: Request) {
+export async function handler (request: Request): Promise<Response> {
   const client = contentful.createClient({
     space: CONTENTFUL_SPACE ?? '',
     accessToken: CONTENTFUL_ACCESS_TOKEN ?? ''

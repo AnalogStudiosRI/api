@@ -6,7 +6,8 @@
     "allowImportingTsExtensions": true,
     "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": false,
-    "noEmit": true
+    "noEmit": true,
+    "strict": true
   },
   "include": [
     "./src/**/*.ts"
