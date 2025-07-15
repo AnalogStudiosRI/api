@@ -18,7 +18,7 @@ const CONFIG = {
   distributionId: process.env.AWS_CLOUDFRONT_ID
 };
 
-export async function handler (request: Request) {
+export async function handler (request: Request): Promise<Response> {
   const cfClient = new AWS.CloudFront(CONFIG);
   const body = await request.json();
   const headers = request.headers;
