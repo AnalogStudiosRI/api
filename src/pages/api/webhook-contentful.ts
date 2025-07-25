@@ -35,7 +35,7 @@ export async function handler (request: Request) {
       Paths: {
         Quantity: 1,
         Items: [
-          `/api/v2/${entity}s*`
+          `/api/${entity}s*`
         ]
       }
     }
