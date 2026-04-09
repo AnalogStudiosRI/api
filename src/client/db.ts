@@ -4,10 +4,18 @@ import { Effect } from 'effect';
 
 type Result = ResultSet | Error;
 
-const client = createClient({
-  url: process.env.DATABASE_URL ?? '',
-  authToken: process.env.DATABASE_TOKEN
-});
+let client: ReturnType<typeof createClient>;
+
+// TODO: fix this upstream in Greenwood
+// https://github.com/AnalogStudiosRI/api/issues/64
+if(process.env.DATABASE_URL === undefined || process.env.DATABASE_TOKEN === undefined) {
+  console.warn('*** DATABASE_URL and DATABASE_TOKEN must both be defined ***');
+} else {
+  client = createClient({
+    url: process.env.DATABASE_URL,
+    authToken: process.env.DATABASE_TOKEN
+  });
+}
 
 const db = {
   async query(sql: string, args: string[] | []): Promise<Result> {
