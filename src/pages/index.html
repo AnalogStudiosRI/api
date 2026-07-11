@@ -37,6 +37,8 @@
             console.log(`RESPONSE for webhook => ${type}`, { data });
             document.getElementById('results').textContent = '1';
             document.getElementsByTagName('pre')[0].textContent = JSON.stringify(data);
+          }).catch((error) => {
+            console.error('Error:', error);
           })
       }
 
